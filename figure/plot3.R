@@ -1,0 +1,12 @@
+library(data.table);
+data <- fread("household_power_consumption.txt");
+d1 <- data[as.Date(data$Date, format = "%d/%m/%Y") == as.Date("2007-02-01")];
+d2 <- data[as.Date(data$Date, format = "%d/%m/%Y") == as.Date("2007-02-02")];
+d <- rbind(d1, d2);
+plot(as.numeric(d$Sub_metering_1), type = 'l', ylab = "Energy sub metering", xlab = "", xaxt = "n");
+lines(as.numeric(d$Sub_metering_2), type = 'l', col = c("red"), ylab = "Global Active Power (kilowatts)", xlab = "", xaxt = "n");
+lines(as.numeric(d$Sub_metering_3), type = 'l', col = c("blue"), ylab = "Global Active Power (kilowatts)", xlab = "", xaxt = "n");
+axis(1, at = c(0, 1450, 2900), labels = c("Thu", "Fri", "Sat"), las = 0, );
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black", "red", "blue"), lty=1, cex=1, text.width = 1000);
+dev.copy(png,'plot3.png');
+dev.off();
